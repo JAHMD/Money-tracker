@@ -1,4 +1,4 @@
-import { DailyExpensesTable } from "@/components/DailyExpensesTable/DailyExpensesTable";
+import DailyExpensesTable from "@/components/DailyExpensesTable";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -32,7 +32,7 @@ const tableHeadList = [
   },
 ];
 
-export function DailyExpensesTable() {
+export default function DailyExpensesTable() {
   const [expensesList, setExpensesList] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const totalAmount = expensesList.reduce((acc, cur) => acc + cur.amount, 0);
