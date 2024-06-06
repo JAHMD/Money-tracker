@@ -11,9 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { Expense, getExpensesList } from "@/shared/utils";
+import { Expense, getStoredExpensesObj } from "@/shared/utils";
 import { useEffect, useState } from "react";
 import AddExpenseButton from "../AddExpenseButton";
+import { Button } from "../ui/button";
 
 const tableHeadList = [
   {
@@ -36,9 +37,16 @@ export function DailyExpensesTable() {
   const [isLoading, setIsLoading] = useState(true);
   const totalAmount = expensesList.reduce((acc, cur) => acc + cur.amount, 0);
 
+  const clearHandler = () => {
+    localStorage.removeItem("expenses");
+    setExpensesList([]);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    const storedExpensesList = getExpensesList();
+
+    const storedExpenses = getStoredExpensesObj();
+    const storedExpensesList = Object.values(storedExpenses);
 
     setExpensesList(storedExpensesList);
     setIsLoading(false);
@@ -46,8 +54,16 @@ export function DailyExpensesTable() {
 
   return (
     <>
-      <div className="ml-auto flex items-center gap-4">
-        <AddExpenseButton expensesList={expensesList} />
+      <div className="flex flex-wrap items-center gap-4">
+        <Button
+          variant="destructive"
+          className="ml-auto w-full capitalize disabled:cursor-not-allowed sm:w-fit"
+          onClick={clearHandler}
+          disabled={expensesList.length === 0}
+        >
+          clear
+        </Button>
+        <AddExpenseButton />
       </div>
       <Table>
         <TableCaption>A list of your recent expenses.</TableCaption>
@@ -68,7 +84,9 @@ export function DailyExpensesTable() {
             expensesList.map((expense, index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium">{expense.dayName}</TableCell>
-                <TableCell className="font-medium">{expense.date}</TableCell>
+                <TableCell className="font-medium">
+                  {/* {expense.date.toLocaleDateString()} */}
+                </TableCell>
                 <TableCell className="text-right">{expense.amount}</TableCell>
               </TableRow>
             ))

@@ -1,11 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { daysList } from "@/shared/days-list";
-import { Expense } from "@/shared/utils";
 import { useState } from "react";
 import NewExpenseForm from "../NewExpenseForm";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,37 +13,16 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 
-type AddExpenseButtonProps = {
-  expensesList: Expense[];
-};
-
-export default function AddExpenseButton({
-  expensesList,
-}: AddExpenseButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function AddExpenseButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog>
       <DialogTrigger
         className={cn(
-          "w-fit capitalize",
+          "w-full capitalize sm:w-fit",
           buttonVariants({ variant: "default" }),
         )}
-        onClick={() => {
-          const date = new Date();
-
-          const hasExpense = expensesList.some(
-            (expense) => expense.date === date.toLocaleDateString(),
-          );
-
-          if (hasExpense) {
-            setIsOpen(false);
-            alert("You already have an expense for this day.");
-          } else {
-            setIsOpen(true);
-          }
-        }}
       >
         new record
       </DialogTrigger>
@@ -57,12 +34,7 @@ export default function AddExpenseButton({
             account and remove your data from our servers.
           </DialogDescription>
         </DialogHeader>
-        <NewExpenseForm
-          setIsLoading={setIsLoading}
-          onClose={() => setIsOpen(false)}
-          isLoading={isLoading}
-          expensesList={expensesList}
-        />
+        <NewExpenseForm />
       </DialogContent>
     </Dialog>
   );

@@ -1,7 +1,4 @@
-import AddExpenseButton from "@/components/AddExpenseButton";
 import { DailyExpensesTable } from "@/components/DailyExpensesTable/DailyExpensesTable";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getExpensesList } from "@/shared/utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
